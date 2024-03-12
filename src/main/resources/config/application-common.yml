@@ -75,8 +75,6 @@ spring:
       classpath:/egovframework/messages/com/message-common,
       classpath:/egovframework/messages/message-common,
       classpath:/egovframework/messages/message-api,
-      classpath:/egovframework/messages/message-batch,
-      classpath:/egovframework/messages/message-admin,
       classpath:/org/egovframe/rte/fdl/idgnr/messages/idgnr,
       classpath:/org/egovframe/rte/fdl/property/messages/properties,
       classpath:/egovframework/egovProps/globals
