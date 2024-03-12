@@ -35,7 +35,7 @@ $ git submodule update --remote --merge
 
 > 서브모듈은 부모 프로젝트에서 **git 링크(gitlink)**로 표시
 > 서브모듈은 부모 프로젝트에서 변경하지 않는다.
-> 아래 명령어로 서브모듈을 비활성화 시키면, 부모프로젝트에서 서브모듈을 변경지 못하며, git 관리 대사에서 제외 된다
+> 아래 명령어로 서브모듈을 비활성화 시키면, 부모프로젝트에서 서브모듈을 변경지 못하며, git 관리 대상에서 제외 된다
 
 ```bash
 $ git config submodule.<name>.active false
