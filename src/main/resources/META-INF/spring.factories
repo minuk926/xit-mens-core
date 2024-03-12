@@ -1,0 +1,2 @@
+# META-INF/spring.factories : xit-init
+#org.springframework.context.ApplicationContextInitializer=xit.core.init.custom.CustomContextInitalizer

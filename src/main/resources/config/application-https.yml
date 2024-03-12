@@ -1,0 +1,27 @@
+#-----------------------------------------------------------------------
+# application Https SSL 설정
+# port가 다른 경우 프로파일 별로 server.port와 server.http 선언
+#
+# keytool -genkey -alias tomcat -storetype PKCS12 -keyalg RSA -keysize 2048 -keystore tomcat.p12 -validity 3650
+# CN=mens, OU=xit, O=xit, L=Unknown, ST=Unknown, C=kr
+# passwd: xit5811807
+# 이름,성 : mens
+# 조직 단위 : xit
+# 조직 이름 : xit
+# 구/군/시:
+# 시/도:
+# 국가코드 : kr
+#-----------------------------------------------------------------------
+server:
+  port: 8443
+  ssl:
+    enabled: true
+    key-alias: tomcat
+    key-store-provider: SUN
+    key-store-type: PKCS12
+    key-store-password: xit5811807
+    key-store: classpath:tomcat.p12
+    redirect: false
+  http: 8081
+  http2:
+    enabled: true

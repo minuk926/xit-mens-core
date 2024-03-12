@@ -1,0 +1,156 @@
+#-----------------------------------------------------------------------
+#   egovframework 설정
+#   framework 공통 설정
+#-----------------------------------------------------------------------
+#   1.  key = value 구조입니다.
+#   2.  key값은 공백문자를 포함불가, value값은 공백문자를 가능
+#   3.  key값으로 한글을 사용불가,   value값은 한글사용이 가능
+#   4.  줄을 바꿀 필요가 있으면 '\'를 라인의 끝에 추가(만약  '\'문자를 사용해야 하는 경우는 '\\'를 사용)
+#   5.  Windows에서의 디렉토리 표시 : '\\' or '/'  ('\' 사용하면 안됨)
+#   6.  Unix에서의 디렉토리 표시 : '/'
+#   7.  주석문 처리는  #사용
+#   8.  value값 뒤에 스페이스가 존재하는 경우 서블릿에서 참조할때는 에러발생할 수 있으므로 trim()하거나 마지막 공백없이 properties 값을 설정할것
+#-----------------------------------------------------------------------
+Globals:
+  # 운영서버 타입(WINDOWS, UNIX)
+  OsType: UNIX
+
+  # G4C 연결용 IP (localhost)
+  LocalIp: 127.0.0.1
+
+  # 파일 확장자 화이트리스트(허용목록) : 파일 확장자를 (.)과 함께 연이어서 사용하며 (.)로 시작한다.
+  fileUpload:
+    Extensions: .gif.jpg.jpeg.png.xls.xlsx
+    '[Images.Extensions]': .gif.jpg.jpeg.png
+
+  # egov validator
+  validator:
+    rule: classpath:/egovframework/validator/validator-rules-let.xml
+    file: classpath:/egovframework/validator/biz/**/*.xml
+
+#server.servlet.context-path=/sht_boot_web
+server:
+  tomcat:
+    uri-encoding: UTF-8
+  #    remote-ip-header: x-forwarded-for
+  #    protocol-header: x-forwarded-proto
+  #    internal-proxies: "10\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}|20\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}|192\\.168\\.\\d{1,3}\\.\\d{1,3}|169\\.254\\.\\d{1,3}\\.\\d{1,3}|127\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}|172\\.1[6-9]{1}\\.\\d{1,3}\\.\\d{1,3}|172\\.2[0-9]{1}\\.\\d{1,3}\\.\\d{1,3}|172\\.3[0-1]{1}\\.\\d{1,3}\\.\\d{1,3}|0:0:0:0:0:0:0:1|::1"
+  servlet:
+    context-path:
+    session.timeout: 3600 #sec
+    encoding:
+      enabled: true
+      charset: utf-8
+      force: true
+#  forward-headers-strategy: FRAMEWORK #NATIVE|FRAMEWORK
+
+spring:
+  mvc:
+    #log-request-details: true
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+  #-----------------------------------------------------------------
+  # xit framework 설정
+  #-----------------------------------------------------------------
+  main:
+    allow-bean-definition-overriding: true
+    #allow-circular-references: true
+
+  devtools:
+    livereload:
+      enabled: false
+  jpa:
+    properties:
+      hibernate:
+        connection:
+          provider_disables_autocommit: false
+  messages:
+    basename:
+      classpath:/egovframework/messages/com/cmm/message-common,
+      classpath:/egovframework/messages/com/cmm/err/message-common,
+      classpath:/egovframework/messages/com/uat/uia/message,
+      classpath:/egovframework/messages/com/sec/rmt/message,
+      classpath:/egovframework/messages/com/sec/ram/message,
+      classpath:/egovframework/messages/com/message-common,
+      classpath:/egovframework/messages/message-common,
+      classpath:/egovframework/messages/message-api,
+      classpath:/egovframework/messages/message-batch,
+      classpath:/egovframework/messages/message-admin,
+      classpath:/org/egovframe/rte/fdl/idgnr/messages/idgnr,
+      classpath:/org/egovframe/rte/fdl/property/messages/properties,
+      classpath:/egovframework/egovProps/globals
+    encoding: UTF-8
+
+springdoc:
+  api-docs:
+    enabled: false
+    path: /api-docs
+  swagger-ui:
+    enabled: false # default true
+    path: /swagger-ui.html
+    csrf:
+      enabled: false
+  version: 'v1'   # API 문서 버전
+  default-consumes-media-type: application/json # default consume media type
+  default-produces-media-type: application/json # default produce media type
+  model-and-view-allowed: true                  # ModelAndView 허용 - excel download시 필요
+
+#-----------------------------------------------------------------
+#  logback-spring.xml 로 설정시 스프링의 환경변수를 로그백 시스템 환경변수로 사용
+#  logging.file.name / path => LOG_FILE,  LOG_PATH
+#  logging.charset.console / file => CONSOLE_LOG_CHARSET, FILE_LOG_CHARSET
+#  logging.pattern.console / file => CONSOLE_LOG_PATTERN, FILE_LOG_PATTERN
+#-----------------------------------------------------------------
+logging:
+  charset:
+    console: UTF-8
+    file: UTF-8
+  exception-conversion-word: '%wEx'
+  level:
+    root: error
+    reactor.netty.http.client: ERROR
+  pattern:
+    console: '%d{yyyy-MM-dd HH:mm:ss.SSS} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr([%18.18thread]){magenta}[traceId=%X{request_id}] %clr([%-35.35logger{35}::%-25.25method{25}:%4line]){cyan} %clr(%m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}){faint}'
+    file: '%d{yyyy-MM-dd HH:mm:ss.SSS} ${LOG_LEVEL_PATTERN:-%5p} [%18.18thread][traceId=%X{request_id}] [%-35.35logger{35}::%-25.25method{25}:%4line] %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}'
+
+# ==================================================================================================================
+# SQL logging lib setting : spy.properties 파일에서 설정
+# ==================================================================================================================
+#decorator:
+#  datasource:
+#    p6spy:
+#      # profiles 별로 정의
+#      #enable-logging: true
+#      multiline: true
+#      logging: slf4j
+#      custom-appender-class: com.p6spy.engine.spy.appender.Slf4JLogger
+#      log-format: com.xit.core.config.support.P6spySqlFormatConfiguration
+#      tracing:
+#        include-parameter-values: true
+
+# Spring Security cors 설정 :: CorsConfiguration 설정 값
+app:
+  #강제로 swagger-url을 지정해야 하는 경우만 선언
+  #swagger-url:
+  cors:
+    # 헤더에 작성된 출처만 브라우저가 리소스를 접근할 수 있도록 허용함.
+    # * 이면 모든 곳에 공개
+    #allowed-origins: http://localhost:8080,http:127.0.0.1:8080
+    # 리소스 접근을 허용하는 HTTP 메서드를 지정
+    allowed-methods: GET, POST, PUT, DELETE
+    # 요청을 허용하는 해더
+    allowed-headers: Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, X-Csrftoken, Authorization
+    #allowed-headers: Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, X-Csrftoken, Authorization, Content-Security-Policy
+    # 클라이언트에서 preflight 의 요청 결과를 저장할 기간을 지정
+    # 60초 동안 preflight 요청을 캐시하는 설정으로, 첫 요청 이후 60초 동안은 OPTIONS 메소드를 사용하는 예비 요청을 보내지 않는다.
+    max-Age: 60
+    # 클라이언트 요청이 쿠키를 통해서 자격 증명을 해야 하는 경우에 true.
+    # 자바스크립트 요청에서 credentials가 include일 때 요청에 대한 응답을 할 수 있는지를 나타낸다.
+    allow-Credentials: true
+    # 기본적으로 브라우저에게 노출이 되지 않지만, 브라우저 측에서 접근할 수 있게 허용해주는 헤더를 지정
+    expose-Headers: Content-Length
+
+  # AES128 암호화 및 복호화 기능을 하는 AES128Config class 에서 사용
+  aes:
+    secret-key: c3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LWlucGl4LWNvcmUtamF2YWZyYW1ld29yay1qYXZhLXRva2VuLWtleQ
