@@ -31,7 +31,18 @@ $ git submodule add https://github.com/minuk926/xit-mens-core.git
 $ git submodule update --remote --merge
 ```
 
-#### 4. 서브모듈 사용시 주의사항
+#### 4. submodule을 사용하는 프로젝트에서 서브모듈 git 관리 대상에서 제외
+
+> 서브모듈은 부모 프로젝트에서 **git 링크(gitlink)**로 표시
+> 서브모듈은 부모 프로젝트에서 변경하지 않는다.
+> 아래 명령어로 서브모듈을 비활성화 시키면, 부모프로젝트에서 서브모듈을 변경지 못하며, git 관리 대사에서 제외 된다
+
+```bash
+$ git config submodule.<name>.active false
+$ git config submodule.xit-mens-core.active false
+```
+
+#### 5. 서브모듈 사용시 주의사항
 
 > 서브모듈에 변경사항이 생겼다면 **반드시 상위 저장소보다 먼저 변경사항을 Commit & Push하거나 Pull 해야한다**
 >
@@ -47,4 +58,5 @@ $ git submodule update --remote --merge
 ```bash
 $ git clone --recurse-submodules {repository_url}
 ```
+
 
