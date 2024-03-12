@@ -28,7 +28,7 @@ $ git submodule add https://github.com/minuk926/xit-mens-core.git
 #### 3. 서브모듈 변경사항 업데이트
 
 ```bash
-$ git submodule update --remote
+$ git submodule update --remote --merge
 ```
 
 #### 4. 서브모듈 사용시 주의사항
