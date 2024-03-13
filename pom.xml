@@ -7,6 +7,7 @@
   <groupId>kr.xit</groupId>
   <artifactId>xit-mens-core</artifactId>
   <version>1.0.0</version>
+<!--  <version>1.0.0-SNAPSHOT</version>-->
   <packaging>jar</packaging>
   <name>xit-mens-core</name>
   <description>Xit mens egov base core module</description>
@@ -646,4 +647,25 @@
       </plugin-->
     </plugins>
   </build>
+
+  <distributionManagement>
+    <snapshotRepository>
+      <id>maven-snapshots</id>
+      <url>https://nas.xit.co.kr:8888/repository/maven-snapshots/</url>
+      <snapshots>
+        <enabled>true</enabled>
+        <updatePolicy>always</updatePolicy>
+      </snapshots>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+    </snapshotRepository>
+
+    <repository>
+      <id>maven-releases</id>
+      <url>https://nas.xit.co.kr:8888/repository/maven-releases</url>
+    </repository>
+
+  </distributionManagement>
+
 </project>
