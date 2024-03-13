@@ -6,17 +6,12 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import kr.xit.core.consts.Constants;
-import kr.xit.core.spring.auth.interceptor.AuthentificationInterceptor;
-import kr.xit.core.spring.config.properties.CorsProperties;
-import kr.xit.core.spring.filter.LoggingFilter;
-import kr.xit.core.spring.filter.ReadableRequestWrapperFilter;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -35,6 +30,12 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import kr.xit.core.consts.Constants;
+import kr.xit.core.spring.auth.interceptor.AuthentificationInterceptor;
+import kr.xit.core.spring.config.properties.CorsProperties;
+import kr.xit.core.spring.filter.LoggingFilter;
+import kr.xit.core.spring.filter.ReadableRequestWrapperFilter;
 
 /**
  * <pre>
@@ -67,8 +68,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @see ReadableRequestWrapperFilter
  * @see LoggingFilter
  */
-@Slf4j
-@RequiredArgsConstructor
+//@Slf4j
+//@RequiredArgsConstructor
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
     /**
@@ -80,7 +81,12 @@ public class WebMvcConfig implements WebMvcConfigurer {
     private final CorsProperties corsProperties;
     private final Environment env;
 
-    /**
+	public WebMvcConfig(CorsProperties corsProperties, Environment env) {
+		this.corsProperties = corsProperties;
+		this.env = env;
+	}
+
+	/**
      * MappingJackson2XmlHttpMessageConverter 순서를 가장 후순위로 조정
      * @param converters
      */
@@ -119,12 +125,12 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**")
             .allowedOriginPatterns("*")
-            .allowedOrigins(corsProperties.getAllowedOrigins())
-            .allowedMethods(corsProperties.getAllowedMethods())
-            .allowedHeaders(corsProperties.getAllowedHeaders())
-            .allowCredentials(corsProperties.getAllowCredentials())
-            .maxAge(corsProperties.getMaxAge())
-            .exposedHeaders(corsProperties.getExposeHeader());
+            .allowedOrigins(corsProperties.allowedOrigins())
+            .allowedMethods(corsProperties.allowedMethods())
+            .allowedHeaders(corsProperties.allowedHeaders())
+            .allowCredentials(corsProperties.allowCredentials())
+            .maxAge(corsProperties.maxAge())
+            .exposedHeaders(corsProperties.exposeHeader());
     }
 
 //    @Bean
